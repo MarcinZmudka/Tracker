@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { createRef, useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 interface Coords {
@@ -7,19 +7,22 @@ interface Coords {
 }
 function App() {
   const ref = useRef<HTMLParagraphElement>(null);
+  const list = useRef<Array<String>>();
+  list.current = ["początek"];
   const find = ({ coords }: { coords: Coords }) => {
     const { latitude, longitude } = coords;
-    console.log("ASAS");
-    if (ref.current)
-      ref.current.innerText = `${latitude} ${longitude} | ${new Date()}`;
+    if (ref.current && list.current) {
+      list.current.push(`</br>${latitude} ${longitude} | ${new Date()}`);
+      ref.current.innerHTML = list.current.join();
+    }
   };
   const options = {
     enableHighAccuracy: true,
     timeout: 100,
     maximumAge: 0,
   };
-  const error = () => {
-    if (ref.current) ref.current.innerText = "ERROR";
+  const error = (err: PositionError) => {
+    if (ref.current) ref.current.innerText = err.message;
   };
   navigator.geolocation.watchPosition(find, error, options);
   return (
