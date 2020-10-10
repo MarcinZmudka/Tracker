@@ -18,7 +18,7 @@ function App() {
   };
   const options = {
     enableHighAccuracy: true,
-    timeout: 100,
+    timeout: 5000,
     maximumAge: 0,
   };
   const error = (err: PositionError) => {
