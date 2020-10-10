@@ -1,4 +1,4 @@
-import React, { createRef, useRef } from "react";
+import React, { useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 interface Coords {
